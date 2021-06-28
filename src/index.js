@@ -2,22 +2,32 @@
 import './sass/main.scss';
 import fetchCountries from './fetchCountries.js';
 import { alert, defaultModules } from '../node_modules/@pnotify/core';
+import countryOne from './templates/country.hbs';
+import countryList from './templates/countryList.hbs'
+// console.log(countryList)
+// console.log(countryOne)
 
+import '@pnotify/core/dist/PNotify.css';
+import * as PNotifyMobile from '@pnotify/mobile/dist/PNotifyMobile.js';
+
+import '@pnotify/mobile/dist/PNotifyMobile.css';
+import '@pnotify/core/dist/BrightTheme.css';
+  defaultModules.set(PNotifyMobile, {});
 
 // ссылки на разметку------------------------------
 const refs = {
     input: document.querySelector('input'),
     body: document.querySelector('body'),
-    country: document.querySelector('container'),
+    country: document.getElementById('container'),
 }
-console.log(refs.input)
-console.log(refs.body)
-console.log(refs.country)
+// console.log(refs.input)
+// console.log(refs.body)
+// console.log(refs.country)
 
 const debounce = require('lodash.debounce');
 
 let searchQuery = ''
-console.log(searchQuery)
+// console.log(searchQuery)
 
 refs.input.addEventListener('input',  debounce(onInput,500))
 
@@ -26,7 +36,7 @@ function onInput() {
     searchQuery = refs.input.value;
 
     fetchCountries(searchQuery)
-        .then((countries) => onResponse(countries));
+        .then(onResponse);
 }
 
 
@@ -39,22 +49,29 @@ function onInput() {
 // проверка на количество стран в промисе------------------------------
 function onResponse (countries){
     if (countries.length > 10) {
-     renderClarifyMessage(countries)
+        renderClarifyMessage(countries)
+       
     } else if (countries.length >= 2 && countries.length <= 10) {
         renderCountriesMany(countries)
+       
     } else if (countries.length===1){
         renderCountry(countries)
+       
     } else {
-       renderDefaultMessage()
+        renderDefaultMessage()
+        
   }
 }
 // если больше 10 стран-----------------------------
 function renderClarifyMessage(countries) {
 
-    // очистить контент
+    clearContent()
 
-     alert({
-    text: 'Notice me, senpai!'
+    alert({
+    type: 'info',
+        text: 'Уточни название страны!',
+        delay: 2000,
+        title: 'ПРИВЕТ'
      });
     console.log('renderClarifyMessage')
     console.log(countries)
@@ -62,23 +79,35 @@ function renderClarifyMessage(countries) {
 
 // если от 2х до 10ти стран------------------------------
 function renderCountriesMany(countries) {
-    // очистить контент
+    clearContent()
     // вывести список стран
+    // console.log(countries)
+    // console.log(countryList(countries))
+    refs.country.insertAdjacentHTML ('beforeend', countryList(countries))
+    // const list = countries.map((country) => country.name);
+    // console.log(list)
     console.log('renderCountriesMany')
-    console.log(countries)
+    
 }
 // если одна страна------------------------------
 function renderCountry(countries) {
-    // очистить контент
-     // вывести картинку страны
-    
-    console.log('renderCountry')
+    clearContent()
+     // вывести карточку страны
+ 
+    refs.country.insertAdjacentHTML('beforeend', countryOne(countries))
     console.log(countries)
+    // console.log('renderCountry')
+    // console.log(countries)
 }
 // //если ни одной страны---------------------------------
 function renderDefaultMessage() {
-    // очистить контент
-   
+    clearContent()
+    alert({
+    type: 'error',
+        text: 'Такой страны не существует!',
+        delay: 2000,
+        title: 'ИЗВИНИ'
+     });
     console.log('Такой страны не существует, уточните поиск')
     
 }
@@ -89,7 +118,7 @@ function renderDefaultMessage() {
 //функция очистки контента-----------------------------
 
 function clearContent() {
-    refs.countryContainer.inner
+    refs.country.innerHTML=''
 }
 
 // switch (true) {
