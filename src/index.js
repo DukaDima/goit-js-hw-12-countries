@@ -4,12 +4,8 @@ import fetchCountries from './fetchCountries.js';
 import { alert, defaultModules } from '../node_modules/@pnotify/core';
 import countryOne from './templates/country.hbs';
 import countryList from './templates/countryList.hbs'
-// console.log(countryList)
-// console.log(countryOne)
-
 import '@pnotify/core/dist/PNotify.css';
 import * as PNotifyMobile from '@pnotify/mobile/dist/PNotifyMobile.js';
-
 import '@pnotify/mobile/dist/PNotifyMobile.css';
 import '@pnotify/core/dist/BrightTheme.css';
   defaultModules.set(PNotifyMobile, {});
@@ -20,14 +16,10 @@ const refs = {
     body: document.querySelector('body'),
     country: document.getElementById('container'),
 }
-// console.log(refs.input)
-// console.log(refs.body)
-// console.log(refs.country)
 
 const debounce = require('lodash.debounce');
 
 let searchQuery = ''
-// console.log(searchQuery)
 
 refs.input.addEventListener('input',  debounce(onInput,500))
 
@@ -105,15 +97,11 @@ function renderDefaultMessage() {
     type: 'error',
         text: 'Такой страны не существует!',
         delay: 2000,
-        title: 'ИЗВИНИ'
+        title: 'ИЗВИНИTE'
      });
     console.log('Такой страны не существует, уточните поиск')
     
 }
-
-
-
-
 //функция очистки контента-----------------------------
 
 function clearContent() {
