@@ -1,6 +1,33 @@
 
     {{#each this}}
-    <span>{{name}}</span>
+    <div class="country-card">
+      <h2 class="country-name">{{name}}</h2>
+
+      <div class="country-information">
+            <div class="country-information-text">
+                <p class="country-card-title">Capital: <span class="country-card-text">{{capital}}</span> </p>
+                <p class="country-card-title">Population:<span class="country-card-text">{{population}}</span></p>
+                <p class="country-card-title">languages:</p>
+              <ul class="country-card-text">
+                 {{#each languages}}
+                   <li class="tag-list__item">{{this.name}}</li>
+                 {{/each}}
+               </ul>
+
+            </div>
+           <div class="country-flag">
+               <img src="{{flag}}" alt="flag">
+           </div>
+       </div>
+
+  </div>
+
+   
+   
+
+
+    </div>
+    {{!-- <span>{{name}}</span>
     <img src="{{flag}}" alt="flag" width="480">
     <span>'Capital:{{capital}}'</span>
     <span>'Population:{{population}}'</span>
@@ -9,6 +36,6 @@
                 {{#each languages}}
                 <li class="tag-list__item">{{this.name}}</li>
                 {{/each}}
-        </ul>
+        </ul> --}}
   
     {{/each}}

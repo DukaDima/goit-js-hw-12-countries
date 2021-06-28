@@ -2,6 +2,7 @@
  * Главный файл стилей.
  * Все паршалы подключаются сюда.
  */
+@import './country';
 @import './normalize';
 @import './reset';
 @import './fonts';
@@ -21,9 +22,8 @@
 @import './contacts';
 @import './footer';
 @import './modal';
-@import "./modal-products-icecream";
-@import "./modal-maps";
-
+@import './modal-products-icecream';
+@import './modal-maps';
 
 // Стили для файла с примером HTML-фрагмента
 // @import './example';
