@@ -15,6 +15,7 @@ const refs = {
     input: document.querySelector('input'),
     body: document.querySelector('body'),
     country: document.getElementById('container'),
+    reset: document.getElementById('reset-button')
 
 }
 
@@ -40,13 +41,17 @@ function onButtonClick(event) {
      event.preventDefault();
     searchQuery = `${event.target.textContent}`
     fetchCountries(searchQuery)
-        .then(onResponse);
+    .then(onResponse);
     
 }
+refs.reset.addEventListener('click', onResetClick);
+function onResetClick(event) {
+    event.preventDefault();
+    clearContent()
+    refs.input.value=''
 
 
-
-
+}
 //  1. вывести результат одной страницы
 
 //  2. вывести результат список стран от 2 до 10 штук
