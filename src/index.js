@@ -15,13 +15,15 @@ const refs = {
     input: document.querySelector('input'),
     body: document.querySelector('body'),
     country: document.getElementById('container'),
+
 }
 
 const debounce = require('lodash.debounce');
 
 let searchQuery = ''
 
-refs.input.addEventListener('input',  debounce(onInput,500))
+refs.input.addEventListener('input', debounce(onInput, 500))
+
 
 function onInput() {
 
@@ -30,6 +32,20 @@ function onInput() {
     fetchCountries(searchQuery)
         .then(onResponse);
 }
+// вібор страны по клику из списка------------
+
+refs.country.addEventListener('click', onButtonClick)
+ 
+function onButtonClick(event) {
+     event.preventDefault();
+    searchQuery = `${event.target.textContent}`
+    fetchCountries(searchQuery)
+        .then(onResponse);
+    
+}
+
+
+
 
 //  1. вывести результат одной страницы
 
@@ -55,12 +71,12 @@ function onResponse (countries){
 }
 // если больше 10 стран-----------------------------
 function renderClarifyMessage(countries) {
-
+// message
     clearContent()
 
     alert({
     type: 'info',
-        text: 'Уточни название страны!',
+        text: 'Уточните название страны!',
         delay: 2000,
         title: 'ПРИВЕТ'
      });
@@ -72,11 +88,7 @@ function renderClarifyMessage(countries) {
 function renderCountriesMany(countries) {
     clearContent()
     // вывести список стран
-    // console.log(countries)
-    // console.log(countryList(countries))
     refs.country.insertAdjacentHTML ('beforeend', countryList(countries))
-    // const list = countries.map((country) => country.name);
-    // console.log(list)
     console.log('renderCountriesMany')
     
 }
@@ -87,10 +99,9 @@ function renderCountry(countries) {
  
     refs.country.insertAdjacentHTML('beforeend', countryOne(countries))
     console.log(countries)
-    // console.log('renderCountry')
-    // console.log(countries)
 }
 // //если ни одной страны---------------------------------
+// error message
 function renderDefaultMessage() {
     clearContent()
     alert({
@@ -107,19 +118,3 @@ function renderDefaultMessage() {
 function clearContent() {
     refs.country.innerHTML=''
 }
-
-// switch (true) {
-    
-//     case countries.length > 10:
-//         renderClarifyMessage(countries);
-//         break;
-//      case countries.length >= 2 && countries.length <= 10:
-//         renderCountriesMany(countries);
-//         break;
-//      case countries.length === 1:
-//         renderCountry(countries);
-//         break;
-//     default:
-//         renderDefaultMessage()
-
-// }
